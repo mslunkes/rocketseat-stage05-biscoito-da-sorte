@@ -1,13 +1,10 @@
 const screen1 = document.querySelector(".screen1");
 const screen2 = document.querySelector(".screen2");
-const imgCookieClosed = document.querySelector('.screen1 img');
+const fortuneCookie = document.querySelector("#fortuneCookie")
 const btnAgain = document.querySelector("#btnAgain");
-let randomPhrase = Math.round(Math.random() * 10)
-
-
 
 //Frases
-let phrases = [
+const fortune = [
     "Você é mais forte do que imagina.",
     "O sucesso é uma escolha, escolha ser bem-sucedido.",
     "Não desista, a vitória está logo ali.",
@@ -22,25 +19,40 @@ let phrases = [
     ]
 
 //Eventos
-screen2.querySelector("button").addEventListener("click", btnAgain)
-imgCookieClosed.addEventListener('click', openCookie);
+fortuneCookie.addEventListener('click', handleTryClick)
+btnAgain.addEventListener('click', handleResetClick)
+document.addEventListener('keydown', function(e) {
+    if(e.key == 'Enter' && screen2.classList.contains('hide')){
+        handleTryClick()
+    } else if(e.key == 'Enter' && screen1.classList.contains('hide')){
+        handleResetClick()
+        }
+
+        
+    }
+)
+
+
+
+function handleTryClick(event) {
+    toggleScreen()
+    pickFortune()
+    
+}
+
+function handleResetClick() {
+toggleScreen()
+}
+
+
+function pickFortune() {
+    let allFortunes = fortune.length
+    let randomNumber = Math.floor(Math.random() * allFortunes)  
+    screen2.querySelector("h2").innerText = `${fortune[randomNumber]}`
+}
 
 
 function toggleScreen() {
-    screen1.classList.toggle('hide');
-    screen2.classList.toggle('hide');
-  }
-  
-  function newPhrase(){
-    document.querySelector('.screen2 p').innerText = phrases[randomPhrase]
-  }
-  
-  function openCookie(){
-    toggleScreen()
-    newPhrase()
-  }
-
-  function btnAgain(){
-    toggleScreen()
-    randomPhrase = Math.round(Math.random() * 10)
-  }
+    screen2.classList.toggle("hide")
+    screen1.classList.toggle("hide")
+}
